@@ -6,11 +6,12 @@ import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.os.IBinder;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputConnection;
 
 public class keyboardService extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
-    public keyboardService() {
-    }
+
     private KeyboardView keyboardView;
     private Keyboard keyboard;
 
@@ -37,7 +38,27 @@ public class keyboardService extends InputMethodService implements KeyboardView.
     }
 
     @Override
-    public void onKey(int primaryCode, int[] keyCodes) {
+    public void onKey(int i, int[] ints) {
+        InputConnection ic = getCurrentInputConnection();
+        switch (i)
+        {
+            case Keyboard.KEYCODE_DELETE:
+                ic.deleteSurroundingText(1,0);
+                break;
+            case Keyboard.KEYCODE_SHIFT:
+                isCaps = !isCaps;
+                keyboard.setShifted(isCaps);
+                keyboardView.invalidateAllKeys();
+                break;
+            case Keyboard.KEYCODE_DONE:
+                ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN,KeyEvent.KEYCODE_ENTER));
+                break;
+            default:
+                char code = (char)i;
+                if(Character.isLetter(code) && isCaps)
+                    code = Character.toUpperCase(code);
+                ic.commitText(String.valueOf(code),1);
+        }
 
     }
 
