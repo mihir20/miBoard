@@ -11,8 +11,14 @@
         android:theme="@style/AppTheme">
         <service
             android:name=".keyboardService"
-            android:enabled="false"
-            android:exported="false"></service>
+            android:enabled="true"
+            android:label="keyboardService"
+            android:permission="android.permission.BIND_INPUT_METHOD"
+            >
+            <meta-data android:name="android.view.im" android:resource="@xml/method"/>
+            <intent-filter>
+                <action android:name="android.view.InputMethod"/>
+            </intent-filter>></service>
     </application>
 
 </manifest>
