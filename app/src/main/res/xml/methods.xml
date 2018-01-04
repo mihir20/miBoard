@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Input-method xmlns:android="http://schemas.android.com/apk/res/android">
+    <subtype
+        android:label="miGLISH"
+        android:imeSubtypeLocale="en_US"
+        android:imeSubtypeMode="keyboard"
+        />
+</Input-method>
